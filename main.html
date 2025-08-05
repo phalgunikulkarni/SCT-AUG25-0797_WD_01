@@ -1,0 +1,345 @@
+<!DOCTYPE html>//mobile responsiveness feature added
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Swayamvara Creations</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Navigation Styles */
+    .celestial-navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: linear-gradient(135deg, #2C3E50 0%, #34495E 50%, #4A6741 100%);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 0;
+      box-shadow: 0 4px 20px rgba(44, 62, 80, 0.3);
+    }
+
+    .navigation-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center; /* Center menu */
+      align-items: center;
+      padding: 15px 20px;
+      position: relative;
+    }
+
+    .menu-links {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .menu-link {
+      color: #FFFFFF;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      padding: 10px 15px;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      position: relative;
+      will-change: transform;
+    }
+
+    .menu-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.5s ease;
+      pointer-events: none;
+    }
+
+    .menu-link:hover {
+      color: #2C3E50;
+      background: linear-gradient(45deg, #A8E6CF, #88D8A3);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(168, 230, 207, 0.4);
+    }
+
+    .menu-link:hover::before {
+      transform: translateX(100%);
+    }
+
+    .mobile-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 5px;
+      position: absolute;
+      right: 20px;
+    }
+
+    .toggle-bar {
+      width: 25px;
+      height: 3px;
+      background: #A8E6CF;
+      margin: 3px 0;
+      transition: 0.3s;
+      border-radius: 2px;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      min-height: 100vh;
+      background: linear-gradient(rgba(44, 62, 80, 0.3), rgba(74, 103, 65, 0.2)),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><pattern id="mandala" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse"><circle cx="100" cy="100" r="80" fill="none" stroke="%23A8E6CF" stroke-width="2" opacity="0.3"/><circle cx="100" cy="100" r="60" fill="none" stroke="%2388D8A3" stroke-width="1.5" opacity="0.4"/><circle cx="100" cy="100" r="40" fill="none" stroke="%2368C5A3" stroke-width="1" opacity="0.5"/></pattern></defs><rect width="100%" height="100%" fill="%232C3E50"/><rect width="100%" height="100%" fill="url(%23mandala)"/></svg>')
+        center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      padding: 20px;
+      animation: fadeInUp 1s ease-out;
+    }
+
+    .main-heading {
+      font-size: 4rem;
+      color: #A8E6CF;
+      margin-bottom: 20px;
+      text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+      animation: mintShimmer 3s ease-in-out infinite;
+    }
+
+    .sub-heading {
+      font-size: 1.5rem;
+      color: #FFFFFF;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 15px 35px;
+      background: linear-gradient(45deg, #A8E6CF, #88D8A3);
+      color: #2C3E50;
+      text-decoration: none;
+      border-radius: 30px;
+      font-size: 18px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 20px rgba(168, 230, 207, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(168, 230, 207, 0.6);
+      background: linear-gradient(45deg, #88D8A3, #A8E6CF);
+    }
+
+    /* Footer */
+    .footer-section {
+      background: linear-gradient(135deg, #2C3E50 0%, #1A252F 100%);
+      color: #FFFFFF;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .contact-info {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+
+    .footer-text {
+      color: #A8E6CF;
+      font-size: 1rem;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes mintShimmer {
+      0%, 100% { color: #A8E6CF; }
+      50% { color: #88D8A3; }
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .mobile-toggle {
+        display: flex;
+      }
+
+      .menu-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(135deg, #2C3E50 0%, #34495E 100%);
+        flex-direction: column;
+        padding: 20px 0;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      .menu-links.active {
+        display: flex;
+      }
+
+      .nav-item {
+        margin: 10px 0;
+      }
+
+      .main-heading {
+        font-size: 2.5rem;
+      }
+
+      .sub-heading {
+        font-size: 1.2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-heading {
+        font-size: 2rem;
+      }
+
+      .navigation-container {
+        padding: 15px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="celestial-navbar">
+    <div class="navigation-container">
+      <ul class="menu-links" id="navigationMenu">
+        <li class="nav-item"><a href="#home" class="menu-link">Home</a></li>
+        <li class="nav-item"><a href="#about" class="menu-link">About</a></li>
+        <li class="nav-item"><a href="#gallery" class="menu-link">Gallery</a></li>
+        <li class="nav-item"><a href="#packages" class="menu-link">Packages</a></li>
+        <li class="nav-item"><a href="#testimonials" class="menu-link">Reviews</a></li>
+        <li class="nav-item"><a href="#contact" class="menu-link">Contact</a></li>
+      </ul>
+      <div class="mobile-toggle" id="mobileToggle">
+        <span class="toggle-bar"></span>
+        <span class="toggle-bar"></span>
+        <span class="toggle-bar"></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section" id="home">
+    <div class="hero-content">
+      <h1 class="main-heading">Swayamvara Creations</h1>
+      <p class="sub-heading">Creating Magical Indian Wedding Celebrations That Last a Lifetime</p>
+      <a href="#contact" class="cta-button">Plan Your Dream Wedding</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer-section" id="contact">
+    <div class="footer-content">
+      <div class="contact-info">
+        <p>📞 +91 98765 43210 | ✉️ info@swarnaweddings.com</p>
+        <p>📍 Mumbai | Delhi | Bangalore | Jaipur</p>
+      </div>
+      <p class="footer-text">© 2025 Swarna Weddings. Making dreams come true, one celebration at a time.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle functionality
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navigationMenu = document.getElementById('navigationMenu');
+
+    mobileToggle.addEventListener('click', function () {
+      navigationMenu.classList.toggle('active');
+
+      // Animate hamburger menu
+      const bars = mobileToggle.querySelectorAll('.toggle-bar');
+      bars.forEach((bar, index) => {
+        if (navigationMenu.classList.contains('active')) {
+          if (index === 0) bar.style.transform = 'rotate(45deg) translate(6px, 6px)';
+          if (index === 1) bar.style.opacity = '0';
+          if (index === 2) bar.style.transform = 'rotate(-45deg) translate(6px, -6px)';
+        } else {
+          bar.style.transform = 'none';
+          bar.style.opacity = '1';
+        }
+      });
+    });
+
+    // Smooth scrolling
+    document.querySelectorAll('.menu-link').forEach(link => {
+      link.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if (targetId.startsWith('#')) {
+          const targetElement = document.querySelector(targetId);
+          if (targetElement) {
+            targetElement.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+          }
+        }
+
+        // Close mobile menu
+        navigationMenu.classList.remove('active');
+        const bars = mobileToggle.querySelectorAll('.toggle-bar');
+        bars.forEach(bar => {
+          bar.style.transform = 'none';
+          bar.style.opacity = '1';
+        });
+      });
+    });
+
+    // Scroll effect for navbar background
+    window.addEventListener('scroll', function () {
+      const navbar = document.querySelector('.celestial-navbar');
+      if (window.scrollY > 100) {
+        navbar.style.background = 'linear-gradient(135deg, rgba(44, 62, 80, 0.95) 0%, rgba(52, 73, 94, 0.95) 50%, rgba(74, 103, 65, 0.95) 100%)';
+      } else {
+        navbar.style.background = 'linear-gradient(135deg, #2C3E50 0%, #34495E 50%, #4A6741 100%)';
+      }
+    });
+  </script>
+</body>
+</html>
